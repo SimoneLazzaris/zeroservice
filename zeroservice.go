@@ -22,6 +22,6 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello %s\n", r.Host)
 }
 
-func readyz(w http.ResponseWriter, r *http.Request) {
+func ready(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OK\n")
 }
