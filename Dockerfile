@@ -4,7 +4,7 @@ WORKDIR /app
 COPY go.* .
 RUN go mod download -x
 COPY *.go ./
-RUN go build -o zeroservice
+RUN CGO_ENABLED=0 go build -o zeroservice
 
 FROM scratch as runner
 WORKDIR /app
@@ -17,5 +17,6 @@ WORKDIR /go
 RUN apk add gcc build-base && go install github.com/go-delve/delve/cmd/dlv@latest
 EXPOSE 8080
 EXPOSE 1234
-CMD ["dlv", "debug", "/app/zeroservice", "--headless", "--listen=:1234"]
+WORKDIR /app
+CMD ["dlv", "debug", "zeroservice", "--headless", "--listen=:1234"]
 
